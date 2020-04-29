@@ -9,18 +9,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class PersonnelGroupeJdbcDAO implements DAO<PersonnelGroupe>{
-
+	/**
+	 * Implementation DAO utilisant jdbc
+	 */
 	private static String db = JdbcInit.db;
-
 	@Override
-	public PersonnelGroupe create(PersonnelGroupe objet) {
+	public PersonnelGroupe create(PersonnelGroupe objet){
 		try (Connection connect = DriverManager.getConnection(db)) {
 			PreparedStatement prepare = connect.prepareStatement("INSERT INTO personnelGroupes (id)" +"VALUES (?)");
 			prepare.setString(1, objet.getId());
 			int result = prepare.executeUpdate();
 			assert result == 1; 
 			List<PersonnelImuable> lp = objet.getAllPersonnel().stream().filter(e -> !e.isGroupe()).map(e -> (PersonnelImuable) e).collect(Collectors.toList());
-			
 			for (PersonnelImuable p : lp) {
 				prepare = connect.prepareStatement("INSERT INTO appartient "+ "VALUES (?, ?)");
 				prepare.setString(1, objet.getId());
@@ -28,21 +28,19 @@ public class PersonnelGroupeJdbcDAO implements DAO<PersonnelGroupe>{
 				prepare.addBatch();
 			}
 			prepare.executeBatch();
-			System.out.println("Création " + objet);
+			System.out.println("Crï¿½ation " + objet);
 		}
-		catch (SQLException e) {
+		catch (SQLException e){
 			e.printStackTrace();
 		}
 		return objet;
 	}
 	
-	
-
 	@Override
-	public PersonnelGroupe read(String id) {
+	public PersonnelGroupe read(String id){
 		PersonnelGroupe pg = null;
 
-		try (Connection connect = DriverManager.getConnection(db)) {
+		try (Connection connect = DriverManager.getConnection(db)){
 			System.out.println("Recherche " + id);
 			PreparedStatement prepare = connect.prepareStatement("SELECT * FROM appartient WHERE id = ?");
 			prepare.setString(1, id);
@@ -53,22 +51,22 @@ public class PersonnelGroupeJdbcDAO implements DAO<PersonnelGroupe>{
 		        pg.addPersonnel(pjd.read(result.getString("nom")));
 		    }			
 		}
-		catch (SQLException e) {
+		catch (SQLException e){
 			e.printStackTrace();
 		}
 		return pg;
 	}
 
 	@Override
-	public PersonnelGroupe update(PersonnelGroupe obj) {
-	try (Connection connect = DriverManager.getConnection(db)) {
+	public PersonnelGroupe update(PersonnelGroupe obj){
+	try (Connection connect = DriverManager.getConnection(db)){
 		List<PersonnelImuable> lp = obj.getAllPersonnel().stream()
 			.filter(e -> !e.isGroupe())
 			.map(e -> (PersonnelImuable) e)
 			.collect(Collectors.toList());
 		PreparedStatement prepare = connect.prepareStatement("DELETE FROM appartient"+ "WHERE id = ?");
 		prepare.setString(1, obj.getId());
-		for (PersonnelImuable p : lp) {
+		for (PersonnelImuable p : lp){
 			prepare = connect.prepareStatement("INSERT INTO appartient "+ "VALUES (?, ?)");
 			prepare.setString(1, obj.getId());
 			prepare.setString(2, p.getNom());
@@ -76,7 +74,7 @@ public class PersonnelGroupeJdbcDAO implements DAO<PersonnelGroupe>{
 		}
 		prepare.executeBatch();
 	}
-	catch (SQLException e) {
+	catch (SQLException e){
 		e.printStackTrace();
 	}
 	System.out.println("Mise A Jour " + obj);
@@ -90,14 +88,11 @@ public class PersonnelGroupeJdbcDAO implements DAO<PersonnelGroupe>{
 			prepare.setString(1, objet.getId());
 			int result = prepare.executeUpdate();
 			assert result == 1;
-			System.out.println("Suppression terminée " + objet);
+			System.out.println("Suppression terminï¿½e " + objet);
 		}
-		catch (SQLException e) {
+		catch (SQLException e){
 			e.printStackTrace();
 		}
-	}
-
-	
-		
+	}		
 }
 

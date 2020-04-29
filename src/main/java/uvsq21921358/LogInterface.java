@@ -1,7 +1,8 @@
 package uvsq21921358;
 
 public interface LogInterface {
-	
-	//
-	public void write(String string) ;
+	/**
+	 * Interface 
+	 */
+	public void write(String string);
 }

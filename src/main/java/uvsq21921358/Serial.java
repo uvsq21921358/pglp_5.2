@@ -10,49 +10,48 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-public abstract class Serial<T extends Serializable> {
-
-	public T writeFile(T obj, String filename, LogInterface log) {
+public abstract class Serial<T extends Serializable>{
+	/**
+	 * la classe abstraite de Serialisation 
+	 */
+	public T writeFile(T obj, String filename, LogInterface log){
 		try (ObjectOutputStream	out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(filename)))){
 			out.writeObject(obj);
-			log.write("Objet " + obj + " créé!");
+			log.write("Objet " + obj + " crï¿½ï¿½!");
 			return obj;
 		} 
-		catch (IOException e) {
+		catch (IOException e){
 			log.write(e.getMessage());
 			return null;
 		}
 	}
 	
-	public void deleteFile(String filename, LogInterface log) {
+	public void deleteFile(String filename,LogInterface log){
 		File file = new File(filename); 
-        if(file.delete()) log.write("Objet supprimé!"); 
+        if(file.delete()) log.write("Objet supprimï¿½!"); 
         else log.write("Suppression impossible");
 	}
-	
-	private boolean exists(String filename) {
+	private boolean exists(String filename){
 		File file = new File(filename); 
         return file.exists();
 	}
-	
-	public T readFile(String filename, LogInterface log) {
-
-		try (ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(filename)))) {
+	public T readFile(String filename, LogInterface log){
+		try (ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(filename)))){
 			//Ajout de  warning
 			@SuppressWarnings("unchecked")
 			T obj = (T) in.readObject();
 			log.write("Objet " + obj + " bien lu!");
 			return obj;
 		} 
-		catch (ClassNotFoundException | IOException e) {
+		catch (ClassNotFoundException | IOException e){
 			log.write(e.getMessage());
 			return null;
 		}
 	}
 	
-	public T createFile(T obj, String filename, LogInterface log) {
+	public T createFile(T obj, String filename,LogInterface log){
 		if (exists(filename)) {
-			log.write("Création impossible");
+			log.write("Crï¿½ation impossible");
 			return null;
 		}
 		else {
@@ -61,12 +60,12 @@ public abstract class Serial<T extends Serializable> {
 		}
 	}
 	
-	public T updateFile(T obj, String filename, LogInterface log) {
+	public T updateFile(T obj,String filename,LogInterface log){
 		if (!exists(filename)) {
 			log.write("Mise A jour impossible");
 			return null;
 		}
-		else {
+		else{
 			deleteFile(filename, log);
 			writeFile(obj, filename, log);
 			return obj;

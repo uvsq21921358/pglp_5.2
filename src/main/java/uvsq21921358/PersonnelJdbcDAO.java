@@ -6,49 +6,48 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class PersonnelJdbcDAO implements DAO<PersonnelImuable> {
-
-
-
+public class PersonnelJdbcDAO implements DAO<PersonnelImuable>{
+	/**
+	 * ImplÃ©mentation JDBC
+	 */
 	private static String db = JdbcInit.db;
 	@Override
-	public PersonnelImuable create(PersonnelImuable objet) {
-		try (Connection connect = DriverManager.getConnection(db)) {
-
+	public PersonnelImuable create(PersonnelImuable objet){
+		try (Connection connect = DriverManager.getConnection(db)){
 			PreparedStatement prepare = connect.prepareStatement("INSERT INTO personnels (nom, prenom)" +"VALUES (?, ?)");
 			prepare.setString(1, objet.getNom());
 			prepare.setString(2, objet.getPrenom());
-			System.out.println("Création reussie " + objet);
+			System.out.println("Crï¿½ation reussie " + objet);
 			int result = prepare.executeUpdate();
 			assert result == 1; 
 		}
-		catch (SQLException e) {
+		catch (SQLException e){
 			e.printStackTrace();
 		}
 		return objet;
 	}
 
 	@Override
-	public PersonnelImuable read(String id) {
+	public PersonnelImuable read(String id){
 		PersonnelImuable p = null;
-		try (Connection connect = DriverManager.getConnection(db)) {
+		try (Connection connect = DriverManager.getConnection(db)){
 			System.out.println(" Recherche " + id);
 			PreparedStatement prepare = connect.prepareStatement("SELECT * FROM personnels WHERE nom = ?");
 			prepare.setString(1, id);
 			ResultSet result = prepare.executeQuery();
-			if(result.next()) {
+			if(result.next()){
 				p = new PersonnelImuable.Builder(result.getString("nom"),result.getString("prenom")).build();
 				result.close();
 			}
 		}
-		catch (SQLException e) {
+		catch (SQLException e){
 			e.printStackTrace();
 		}
 		return p;
 	}
 
 	@Override
-	public PersonnelImuable update(PersonnelImuable objet) {
+	public PersonnelImuable update(PersonnelImuable objet){
 		try (Connection connect = DriverManager.getConnection(db)) {
 			PreparedStatement prepare = connect.prepareStatement("UPDATE personnels "+ "SET prenom = ?"+ "WHERE nom = ?");
 			prepare.setString(1, objet.getPrenom());
@@ -56,7 +55,7 @@ public class PersonnelJdbcDAO implements DAO<PersonnelImuable> {
 			int result = prepare.executeUpdate();
 			assert result == 1;
 		}
-		catch (SQLException e) {
+		catch (SQLException e){
 			e.printStackTrace();
 		}
 		System.out.println("Mise A Jour " + objet);
@@ -64,20 +63,18 @@ public class PersonnelJdbcDAO implements DAO<PersonnelImuable> {
 	}
 
 	@Override
-	public void delete(PersonnelImuable objet) {
-		try (Connection connect = DriverManager.getConnection(db)) {
+	public void delete(PersonnelImuable objet){
+		try (Connection connect = DriverManager.getConnection(db)){
 			PreparedStatement prepare = connect.prepareStatement("DELETE FROM personnels "+ "WHERE nom = ?");
 			prepare.setString(1, objet.getNom());
 			int result = prepare.executeUpdate();
 			assert result == 1;
 			System.out.println("Suppression reussie " + objet);
 		}
-		catch (SQLException e) {
+		catch (SQLException e){
 			e.printStackTrace();
 		}
-
 	}
-
 }
 
 
