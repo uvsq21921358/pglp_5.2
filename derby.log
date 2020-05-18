@@ -1,10 +1,10 @@
 ----------------------------------------------------------------
-Wed Apr 29 18:46:02 CEST 2020:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.3.0 - (1405108): instance a816c00e-0171-c6d4-b765-000006abc530 
-on database directory C:\Users\utilisateur\Documents\SEMESTRE 2\PROGRAMMATION_GL\CODE\pglp_5.2\bd  with class loader sun.misc.Launcher$AppClassLoader@610455d6 
-Loaded from file:/C:/Users/utilisateur/.m2/repository/org/apache/derby/derby/10.8.3.0/derby-10.8.3.0.jar
+Mon May 18 20:08:21 CEST 2020:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-0172-28f8-ebab-0000073ab400 
+on database directory C:\Users\utilisateur\Documents\SEMESTRE 2\PROGRAMMATION_GL\CODE\pglp_5.2\base with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@c387f44 
+Loaded from file:/C:/Users/utilisateur/.m2/repository/org/apache/derby/derby/10.12.1.1/derby-10.12.1.1.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_241-b07
+java.runtime.version=13.0.2+8
 user.dir=C:\Users\utilisateur\Documents\SEMESTRE 2\PROGRAMMATION_GL\CODE\pglp_5.2
 os.name=Windows 10
 os.arch=amd64

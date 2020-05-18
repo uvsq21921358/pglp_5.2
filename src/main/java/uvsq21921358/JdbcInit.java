@@ -13,14 +13,15 @@ import java.util.Properties;
  */
 
 public class JdbcInit{
-	private static final String Nom = "Marie";
-	private static final String password = "MARIE";
-	public static String db = "jdbc:derby:bd;create=true";
+	private static final String Nom = "Nayima";
+	private static final String password = "pwd";
+	public static String db = "jdbc:derby:base;create=true";
 	
 	public JdbcInit(){
 		Properties connectionProps = new Properties();
 		connectionProps.put("user", Nom);
 		connectionProps.put("user", password);
+		System.out.println("Connexion reussie ");
 	}
 	public void dropCreate(){
 		try (Connection connect = DriverManager.getConnection(db)){
@@ -32,6 +33,7 @@ public class JdbcInit{
 			state.addBatch( "CREATE TABLE appartient ("+ "id VARCHAR(100),"+ "nom VARCHAR(100)"+ ")"); 
 			state.addBatch("CREATE TABLE personnels ("+ "nom VARCHAR(100) PRIMARY KEY,"+ "prenom VARCHAR(100) NOT NULL,"+ "dateNaiss DATE NOT NULL"+ ")");
 			state.executeBatch();
+			System.out.println("Suppression table personnels reussie ");
 		} 
 		catch (SQLException e){
 			e.printStackTrace();
@@ -45,6 +47,7 @@ public class JdbcInit{
 			state.addBatch("CREATE TABLE appartient ("+ "id VARCHAR(100),"+ "nom VARCHAR(100)"+ ")"); 
 			state.addBatch("CREATE TABLE personnels ("+ "nom VARCHAR(100) PRIMARY KEY,"+ "prenom VARCHAR(100) NOT NULL,"+ "dateNaiss DATE NOT NULL"+ ")");
 			state.executeBatch();
+			System.out.println("Creation table personnel reussie ");
 		} 
 		catch (SQLException e){
 			e.printStackTrace();
